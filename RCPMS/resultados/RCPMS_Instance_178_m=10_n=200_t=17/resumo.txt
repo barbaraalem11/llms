@@ -1,0 +1,5 @@
+instance  : RCPMS_Instance_178_m=10_n=200_t=17
+seed_42   : ERRO   (validador: N/A)
+seed_43   : ERRO   (validador: N/A)
+seed_44   : ERRO   (validador: N/A)
+melhor    : ERRO

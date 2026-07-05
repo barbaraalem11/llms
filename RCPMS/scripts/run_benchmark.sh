@@ -1,0 +1,189 @@
+#!/bin/bash
+# =============================================================================
+# run_benchmark.sh
+# Roda o GRASP-PT/AC 3 vezes (seeds 42, 43, 44) e valida os resultados.
+#
+# Uso:
+#   # Uma instância específica:
+#   bash scripts/run_benchmark.sh instances/rcpms_all/RCPMS_Instance_166_m=10_n=200_t=11
+#
+#   # Arquivo com lista de instâncias:
+#   bash scripts/run_benchmark.sh --file instances/instancias/instances-5.txt
+#
+#   # Todas as instâncias do arquivo padrão (instances.txt):
+#   bash scripts/run_benchmark.sh
+# =============================================================================
+
+ARGS_FILE="irace-output/best-configuration.args"
+RUNNER="./irace-runner.py"
+VALIDADOR="./validador/example/mainRCPMS"
+SEEDS=(42 43 44)
+OUT_DIR="resultados"
+
+TIMESTAMP=$(date "+%Y%m%d-%H%M%S")
+LOG_FILE="irace-output/benchmark-${TIMESTAMP}.txt"
+
+# ── Verificações iniciais ──────────────────────────────────────────────────
+if [ ! -f "$ARGS_FILE" ]; then
+    echo "ERRO: $ARGS_FILE não encontrado. Rode primeiro: Rscript scripts/run_irace.R"
+    exit 1
+fi
+
+if [ ! -f "$VALIDADOR" ]; then
+    echo "AVISO: validador não encontrado em $VALIDADOR — validação será pulada."
+    SKIP_VALID=1
+fi
+
+mkdir -p "$OUT_DIR"
+
+# ── Definir lista de instâncias ────────────────────────────────────────────
+if [ "$1" = "--file" ] && [ -n "$2" ]; then
+    # Arquivo de instâncias passado por argumento
+    if [ ! -f "$2" ]; then
+        echo "ERRO: arquivo não encontrado: $2"
+        exit 1
+    fi
+    mapfile -t INSTANCE_LIST < <(grep -v '^\s*$' "$2" | tr -d '\r')
+    echo "Modo: arquivo → $2 (${#INSTANCE_LIST[@]} instâncias)"
+
+elif [ -n "$1" ]; then
+    # Instância única passada por argumento
+    if [ ! -f "$1" ]; then
+        echo "ERRO: instância não encontrada: $1"
+        exit 1
+    fi
+    INSTANCE_LIST=("$1")
+    echo "Modo: instância única → $1"
+
+else
+    # Ler todas do instances.txt
+    if [ ! -f "instances.txt" ]; then
+        echo "ERRO: instances.txt não encontrado e nenhuma instância foi passada."
+        echo "Uso: bash scripts/run_benchmark.sh <instancia>"
+        echo "     bash scripts/run_benchmark.sh --file <arquivo_instancias>"
+        exit 1
+    fi
+    mapfile -t INSTANCE_LIST < <(grep -v '^\s*$' instances.txt | tr -d '\r')
+    echo "Modo: todas as instâncias de instances.txt (${#INSTANCE_LIST[@]} instâncias)"
+fi
+
+# ── Função de log ──────────────────────────────────────────────────────────
+log() {
+    echo "$1"
+    echo "$1" >> "$LOG_FILE"
+}
+
+# ── Cabeçalho ──────────────────────────────────────────────────────────────
+{
+echo "================================================================"
+echo "  BENCHMARK GRASP-PT/AC — $(date '+%Y-%m-%d %H:%M:%S')"
+echo "  Args : $(cat $ARGS_FILE)"
+echo "  Seeds: ${SEEDS[*]}"
+echo "  Instancias: ${#INSTANCE_LIST[@]}"
+echo "================================================================"
+} | tee "$LOG_FILE"
+
+# ── Cabeçalho da tabela resumo ─────────────────────────────────────────────
+printf "\n%-52s %10s %10s %10s %10s %10s\n" \
+    "Instancia" "Seed42" "Seed43" "Seed44" "Melhor" "Valido" >> "$LOG_FILE"
+printf "%-52s %10s %10s %10s %10s %10s\n" \
+    "$(printf '%0.s-' {1..52})" "----------" "----------" "----------" "----------" "----------" >> "$LOG_FILE"
+
+# ── Loop principal ─────────────────────────────────────────────────────────
+for inst_path in "${INSTANCE_LIST[@]}"; do
+    inst_path=$(echo "$inst_path" | xargs)
+    [ -z "$inst_path" ] && continue
+
+    inst_name=$(basename "$inst_path")
+    inst_dir="$OUT_DIR/$inst_name"
+    mkdir -p "$inst_dir"
+
+    log ""
+    log "================================================================"
+    log "  Instância: $inst_name"
+    log "================================================================"
+
+    makespans=()
+    valid_results=()
+
+    for seed in "${SEEDS[@]}"; do
+        log ""
+        log "  [seed=$seed] Rodando solver..."
+
+        makespan=$(python3 "$RUNNER" \
+            --args-file "$ARGS_FILE" \
+            --seed "$seed" \
+            "$inst_path" \
+            2>>"$LOG_FILE")
+
+        src="$OUT_DIR/${inst_name}.txt"
+        dst="$inst_dir/seed_${seed}.txt"
+        [ -f "$src" ] && mv "$src" "$dst"
+
+        if [ -z "$makespan" ] || ! [[ "$makespan" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
+            makespan="ERRO"
+            log "  [seed=$seed] ERRO no solver"
+        else
+            log "  [seed=$seed] Makespan = $makespan"
+        fi
+        makespans+=("$makespan")
+
+        # Validar
+        valid_ms="N/A"
+        if [ -z "$SKIP_VALID" ] && [ -f "$dst" ] && [ "$makespan" != "ERRO" ]; then
+            log "  [seed=$seed] Validando..."
+            valid_out=$("$VALIDADOR" "$inst_path" "$dst" 2>&1)
+            echo "$valid_out" >> "$LOG_FILE"
+            valid_ms=$(echo "$valid_out" | grep -i "makespan" | grep -o '[0-9]\+' | tail -1)
+            [ -z "$valid_ms" ] && valid_ms="ERRO"
+            log "  [seed=$seed] Validador makespan = $valid_ms"
+        fi
+        valid_results+=("$valid_ms")
+
+        # Salvar solução SSP no log
+        if [ -f "$dst" ]; then
+            echo "  -- Solucao SSP (seed=$seed) --" >> "$LOG_FILE"
+            while IFS= read -r line; do
+                echo "    $line" >> "$LOG_FILE"
+            done < "$dst"
+        fi
+    done
+
+    # Melhor makespan
+    best="ERRO"
+    for ms in "${makespans[@]}"; do
+        if [[ "$ms" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
+            if [ "$best" = "ERRO" ] || (( $(echo "$ms < $best" | bc -l) )); then
+                best=$ms
+            fi
+        fi
+    done
+
+    log ""
+    log "  Melhor makespan: $best"
+
+    # Resumo da instância
+    cat > "$inst_dir/resumo.txt" << EOF
+instance  : $inst_name
+seed_42   : ${makespans[0]}   (validador: ${valid_results[0]})
+seed_43   : ${makespans[1]}   (validador: ${valid_results[1]})
+seed_44   : ${makespans[2]}   (validador: ${valid_results[2]})
+melhor    : $best
+EOF
+
+    # Linha na tabela
+    printf "%-52s %10s %10s %10s %10s %10s\n" \
+        "$inst_name" \
+        "${makespans[0]}" "${makespans[1]}" "${makespans[2]}" \
+        "$best" "${valid_results[0]}" >> "$LOG_FILE"
+done
+
+# ── Rodapé ─────────────────────────────────────────────────────────────────
+{
+echo ""
+echo "================================================================"
+echo "  Benchmark concluído: $(date '+%Y-%m-%d %H:%M:%S')"
+echo "  Log : $LOG_FILE"
+echo "  Resultados : $OUT_DIR/"
+echo "================================================================"
+} | tee -a "$LOG_FILE"

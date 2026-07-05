@@ -1,0 +1,65 @@
+================================================================
+  BENCHMARK GRASP-PT/AC — 2026-05-27 17:10:31
+  Args : --n_replicas 22 --mcl 290 --ptl 203 --temp_init 0.2177 --temp_fim 0.5737 --vnd_delta 18
+  Seeds: 45 46 47 48 49 50 51
+  Instancias: 5
+================================================================
+
+Instancia                                                Seed42     Seed43     Seed44     Melhor     Valido
+---------------------------------------------------- ---------- ---------- ---------- ---------- ----------
+
+================================================================
+  Instância: RCPMS_Instance_126_m=7_n=200_t=11
+================================================================
+
+  [seed=45] Rodando solver...
+[benchmark] args-file=irace-output/best-configuration.args seed=45 instance=instances/rcpms_all/RCPMS_Instance_126_m=7_n=200_t=11
+[benchmark] seed=45 params={'n_replicas': 22, 'mcl': 290, 'ptl': 203, 'temp_init': 0.2177, 'temp_fim': 0.5737, 'vnd_delta': 18}
+[benchmark] resultado salvo em: resultados/RCPMS_Instance_126_m=7_n=200_t=11.txt
+  [seed=45] Makespan = 894.000000
+  [seed=45] Validando...
+Machines:7
+Jobs:200
+Tools:11
+Change tax:5
+Job tax:55 57 8 21 55 28 41 44 28 44 15 39 23 7 2 56 51 30 9 37 8 2 16 21 31 52 15 51 13 4 2 25 17 57 49 11 22 2 50 46 44 58 20 7 9 50 20 6 25 15 35 46 38 54 45 4 30 36 33 9 14 3 9 28 4 39 59 35 2 21 30 40 39 33 45 22 1 31 23 10 50 26 47 39 15 26 9 50 14 59 40 26 40 6 59 20 52 53 16 28 16 58 56 52 50 41 20 15 19 18 3 24 23 51 47 42 50 36 42 9 45 52 10 49 12 13 25 41 32 37 24 58 3 23 21 40 12 3 3 42 17 35 57 5 36 30 59 26 56 46 51 56 32 17 23 28 29 18 34 28 58 31 26 16 57 35 37 25 16 26 8 44 41 25 29 9 23 37 14 55 15 34 55 13 44 5 2 56 26 39 52 30 21 3 6 48 38 5 31 7 
+Jobs x Tools:10 5 4 3 3 9 3 6 2 8 9 3 1 5 5 10 5 5 9 8 0 1 3 1 9 4 3 5 7 10 7 0 6 8 8 6 9 5 9 4 5 5 8 9 2 7 1 2 3 8 9 4 4 3 1 10 2 1 3 2 1 4 10 6 0 4 8 8 10 1 0 9 8 10 6 2 3 5 7 3 6 3 4 5 6 3 2 10 7 7 5 0 3 10 10 4 1 9 9 10 7 3 1 8 1 6 5 0 0 5 1 1 9 7 8 9 4 8 2 2 9 3 9 0 0 4 9 5 6 7 5 10 1 8 9 9 9 3 9 4 2 5 3 2 5 3 1 5 0 9 7 5 0 8 6 4 2 8 10 2 5 8 5 3 3 8 4 7 6 0 0 7 2 1 3 10 2 10 6 9 4 5 8 5 5 5 4 4 2 5 6 4 6 9 4 3 8 9 0 5 
+=== Leitura Concluida ===
+EvalSol (Makespan lido): 894 EvalSol Calculado: 894
+Sol (Tamanho: 200): 41 160 1 151 16 27 40 184 127 90 ...
+CutStart (Tamanho: 7): 0 28 56 84 116 140 168 
+CutEnd (Tamanho: 7): 28 56 84 116 140 168 200 
+BlockPos (Tamanho: 15): [0=5] [28=0] [42=7] [54=9] [56=9] [78=3] [84=3] [101=6] [115=4] [116=4] [134=10] [140=10] [149=8] [168=1] [184=2] 
+  [seed=45] Validador makespan = 894
+  -- Solucao SSP (seed=45) --
+    instance   : RCPMS_Instance_126_m=7_n=200_t=11
+    makespan   : 894
+    
+    simulation_run makespan : 894 bestS : [41, 160, 1, 151, 16, 27, 40, 184, 127, 90, 83, 189, 144, 141, 181, 77, 17, 147, 162, 130, 106, 109, 183, 13, 199, 185, 14, 37, 148, 123, 152, 198, 70, 91, 169, 31, 108, 107, 124, 20, 170, 64, 89, 113, 150, 45, 171, 129, 167, 78, 100, 88, 28, 30, 179, 97, 38, 149, 120, 115, 71, 135, 50, 24, 5, 126, 112, 36, 134, 98, 10, 136, 122, 18, 43, 197, 138, 193, 101, 142, 164, 4, 53, 121, 195, 6, 92, 11, 58, 145, 174, 81, 85, 48, 3, 22, 163, 26, 79, 137, 76, 84, 178, 35, 190, 80, 74, 7, 105, 128, 63, 154, 192, 32, 168, 82, 187, 25, 116, 39, 51, 139, 65, 52, 166, 191, 155, 95, 180, 125, 2, 194, 61, 186, 94, 131, 15, 0, 87, 177, 158, 73, 99, 62, 175, 93, 29, 55, 68, 66, 33, 182, 103, 34, 114, 9, 72, 196, 19, 117, 67, 165, 161, 133, 42, 157, 153, 49, 146, 102, 96, 104, 54, 57, 173, 111, 12, 23, 69, 46, 60, 110, 132, 21, 118, 172, 56, 156, 8, 159, 188, 176, 75, 140, 44, 59, 86, 119, 47, 143]
+    cut start set: [0, 28, 56, 84, 116, 140, 168]
+    cut end set: [28, 56, 84, 116, 140, 168, 200]
+    block pos set: [0=5, 28=0, 42=7, 54=9, 56=9, 78=3, 84=3, 101=6, 115=4, 116=4, 134=10, 140=10, 149=8, 168=1, 184=2]
+
+  [seed=46] Rodando solver...
+[benchmark] args-file=irace-output/best-configuration.args seed=46 instance=instances/rcpms_all/RCPMS_Instance_126_m=7_n=200_t=11
+[benchmark] seed=46 params={'n_replicas': 22, 'mcl': 290, 'ptl': 203, 'temp_init': 0.2177, 'temp_fim': 0.5737, 'vnd_delta': 18}
+Traceback (most recent call last):
+  File "/mnt/c/Users/barba/OneDrive/Documentos/ic.py/RCPMS/./irace-runner.py", line 303, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/mnt/c/Users/barba/OneDrive/Documentos/ic.py/RCPMS/./irace-runner.py", line 264, in main
+    solver, inst, best_sol, best_ms = _run_solver(
+                                      ^^^^^^^^^^^^
+  File "/mnt/c/Users/barba/OneDrive/Documentos/ic.py/RCPMS/./irace-runner.py", line 138, in _run_solver
+    best_sol, best_ms = solver.parallel_tempering(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/barba/OneDrive/Documentos/ic.py/RCPMS/grasp_pt_rcpms.py", line 813, in parallel_tempering
+    for fut in as_completed(futs):
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 243, in as_completed
+    waiter.event.wait(wait_timeout)
+  File "/usr/lib/python3.12/threading.py", line 655, in wait
+    signaled = self._cond.wait(timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/threading.py", line 355, in wait
+    waiter.acquire()
+KeyboardInterrupt

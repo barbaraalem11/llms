@@ -1,0 +1,17 @@
+================================================================
+  BENCHMARK GRASP-PT/AC — 2026-05-25 19:33:07
+  Args : --n_replicas 22 --mcl 290 --ptl 203 --temp_init 0.2177 --temp_fim 0.5737 --vnd_delta 18
+  Seeds: 42 43 44
+  Instancias: 5
+================================================================
+
+Instancia                                                Seed42     Seed43     Seed44     Melhor     Valido
+---------------------------------------------------- ---------- ---------- ---------- ---------- ----------
+
+================================================================
+  Instância: RCPMS_Instance_157_m=9_n=200_t=11
+================================================================
+
+  [seed=42] Rodando solver...
+[benchmark] args-file=irace-output/best-configuration.args seed=42 instance=instances/rcpms_all/RCPMS_Instance_157_m=9_n=200_t=11
+[benchmark] seed=42 params={'n_replicas': 22, 'mcl': 290, 'ptl': 203, 'temp_init': 0.2177, 'temp_fim': 0.5737, 'vnd_delta': 18}

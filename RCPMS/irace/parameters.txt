@@ -1,0 +1,16 @@
+# parameters.txt  –  Hiperparâmetros do GRASP-PT/AC para calibração com iRace
+#
+# Formato iRace: <nome>  "<flag> "  <tipo>  <domínio>
+#   i = inteiro    r = real
+#
+# Flags devem coincidir EXATAMENTE com os argumentos de grasp_pt_rcpms.py.
+#
+# Valores de referência (Almeida et al., 2024):
+#   n_replicas=20, mcl=500, ptl=400, temp_init=0.1, temp_fim=0.5, vnd_delta=10
+
+n_replicas    "--n_replicas "    i    (8, 24)
+mcl           "--mcl "          i    (200, 800)
+ptl           "--ptl "          i    (200, 600)
+temp_init     "--temp_init "    r    (0.001, 0.5)
+temp_fim      "--temp_fim "     r    (0.3, 1.5)
+vnd_delta     "--vnd_delta "    i    (5, 30)

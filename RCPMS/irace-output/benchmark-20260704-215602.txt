@@ -1,0 +1,34 @@
+================================================================
+  BENCHMARK GRASP-PT/AC — 2026-07-04 21:56:02
+  Args : --n_replicas 22 --mcl 290 --ptl 203 --temp_init 0.2177 --temp_fim 0.5737 --vnd_delta 18
+  Seeds: 42 43 44
+  Instancias: 1
+================================================================
+
+Instancia                                                Seed42     Seed43     Seed44     Melhor     Valido
+---------------------------------------------------- ---------- ---------- ---------- ---------- ----------
+
+================================================================
+  Instância: RCPMS_Instance_178_m=10_n=200_t=17
+================================================================
+
+  [seed=42] Rodando solver...
+python3: can't open file '/mnt/c/Users/barba/OneDrive/Documentos/ic.py/RCPMS/./irace-runner.py': [Errno 2] No such file or directory
+  [seed=42] ERRO no solver
+
+  [seed=43] Rodando solver...
+python3: can't open file '/mnt/c/Users/barba/OneDrive/Documentos/ic.py/RCPMS/./irace-runner.py': [Errno 2] No such file or directory
+  [seed=43] ERRO no solver
+
+  [seed=44] Rodando solver...
+python3: can't open file '/mnt/c/Users/barba/OneDrive/Documentos/ic.py/RCPMS/./irace-runner.py': [Errno 2] No such file or directory
+  [seed=44] ERRO no solver
+
+  Melhor makespan: ERRO
+RCPMS_Instance_178_m=10_n=200_t=17                         ERRO       ERRO       ERRO       ERRO        N/A
+
+================================================================
+  Benchmark concluído: 2026-07-04 21:56:02
+  Log : irace-output/benchmark-20260704-215602.txt
+  Resultados : resultados/
+================================================================

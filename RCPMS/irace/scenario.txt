@@ -1,0 +1,9 @@
+targetRunner = "../irace-runner.py"
+parameterFile = "parameters.txt"
+trainInstancesFile = "instances-train.txt"
+execDir = ".."
+logFile = "./irace-output/irace.Rdata"
+maxExperiments = 400 
+firstTest = 5
+parallel = 1
+debugLevel = 1

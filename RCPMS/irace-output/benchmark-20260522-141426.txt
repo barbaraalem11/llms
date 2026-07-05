@@ -1,0 +1,62 @@
+================================================================
+  BENCHMARK GRASP-PT/AC — 2026-05-22 14:14:26
+  Args : --n_replicas 22 --mcl 290 --ptl 203 --temp_init 0.2177 --temp_fim 0.5737 --vnd_delta 18
+  Seeds: 42 43 44
+  Instancias: 5
+================================================================
+
+Instancia                                                Seed42     Seed43     Seed44     Melhor     Valido
+---------------------------------------------------- ---------- ---------- ---------- ---------- ----------
+
+================================================================
+  Instância: RCPMS_Instance_131_m=7_n=200_t=11
+================================================================
+
+  [seed=42] Rodando solver...
+[benchmark] args-file=irace-output/best-configuration.args seed=42 instance=instances/rcpms_all/RCPMS_Instance_131_m=7_n=200_t=11
+[benchmark] seed=42 params={'n_replicas': 22, 'mcl': 290, 'ptl': 203, 'temp_init': 0.2177, 'temp_fim': 0.5737, 'vnd_delta': 18}
+ERRO: solver falhou - [Errno 2] No such file or directory: 'instances/rcpms_all/RCPMS_Instance_131_m=7_n=200_t=11'
+  [seed=42] ERRO no solver
+
+  [seed=43] Rodando solver...
+[benchmark] args-file=irace-output/best-configuration.args seed=43 instance=instances/rcpms_all/RCPMS_Instance_131_m=7_n=200_t=11
+[benchmark] seed=43 params={'n_replicas': 22, 'mcl': 290, 'ptl': 203, 'temp_init': 0.2177, 'temp_fim': 0.5737, 'vnd_delta': 18}
+ERRO: solver falhou - [Errno 2] No such file or directory: 'instances/rcpms_all/RCPMS_Instance_131_m=7_n=200_t=11'
+  [seed=43] ERRO no solver
+
+  [seed=44] Rodando solver...
+[benchmark] args-file=irace-output/best-configuration.args seed=44 instance=instances/rcpms_all/RCPMS_Instance_131_m=7_n=200_t=11
+[benchmark] seed=44 params={'n_replicas': 22, 'mcl': 290, 'ptl': 203, 'temp_init': 0.2177, 'temp_fim': 0.5737, 'vnd_delta': 18}
+ERRO: solver falhou - [Errno 2] No such file or directory: 'instances/rcpms_all/RCPMS_Instance_131_m=7_n=200_t=11'
+  [seed=44] ERRO no solver
+
+  Melhor makespan: ERRO
+RCPMS_Instance_131_m=7_n=200_t=11                          ERRO       ERRO       ERRO       ERRO        N/A
+
+================================================================
+  Instância: RCPMS_Instance_132_m=7_n=200_t=13
+================================================================
+
+  [seed=42] Rodando solver...
+[benchmark] args-file=irace-output/best-configuration.args seed=42 instance=instances/rcpms_all/RCPMS_Instance_132_m=7_n=200_t=13
+[benchmark] seed=42 params={'n_replicas': 22, 'mcl': 290, 'ptl': 203, 'temp_init': 0.2177, 'temp_fim': 0.5737, 'vnd_delta': 18}
+Traceback (most recent call last):
+  File "/mnt/c/Users/barba/OneDrive/Documentos/ic.py/RCPMS/./irace-runner.py", line 303, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/mnt/c/Users/barba/OneDrive/Documentos/ic.py/RCPMS/./irace-runner.py", line 264, in main
+    solver, inst, best_sol, best_ms = _run_solver(
+                                      ^^^^^^^^^^^^
+  File "/mnt/c/Users/barba/OneDrive/Documentos/ic.py/RCPMS/./irace-runner.py", line 138, in _run_solver
+    best_sol, best_ms = solver.parallel_tempering(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/barba/OneDrive/Documentos/ic.py/RCPMS/grasp_pt_rcpms.py", line 813, in parallel_tempering
+    for fut in as_completed(futs):
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 243, in as_completed
+    waiter.event.wait(wait_timeout)
+  File "/usr/lib/python3.12/threading.py", line 655, in wait
+    signaled = self._cond.wait(timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/threading.py", line 355, in wait
+    waiter.acquire()
+KeyboardInterrupt
